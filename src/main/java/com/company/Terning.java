@@ -6,17 +6,17 @@ public class Terning {
         public static final int MAX	= 6;
         private int faceValue;
 
-        public Terning(  )
+        public Terning()
         {
-            roll(  );
+            roll();
         }
 
-        public void roll(  )
+        public void roll()
         {
             faceValue = (int) ( ( Math.random(  ) * MAX ) + 1 );
         }
 
-        public int getFaceValue(  )
+        public int getFaceValue()
         {
             return faceValue;
         }

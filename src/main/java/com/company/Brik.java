@@ -2,14 +2,25 @@ package com.company;
 
 public class Brik {
 
-    public static void createPiece(int playerId, String color){
+    private Felter location;
 
+  public Brik(Felter location)
+        {
+            this.location = location;
+        }
 
+        public Felter getLocation()
+        {
+            return location;
+        }
+
+        public void setLocation(Felter location)
+        {
+            this.location = location;
+        }
     }
 
 
-
-    }
 
 
 
