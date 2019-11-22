@@ -8,6 +8,8 @@ import java.awt.*;
 public class Gui {
 
     public Gui(){
+
+
         GUI_Field[] fields = new GUI_Field[24];
 
         GUI_Start start = new GUI_Start();
