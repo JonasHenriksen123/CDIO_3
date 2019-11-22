@@ -12,7 +12,6 @@ public class Gui {
     private GUI_Field[] fields;
 
     public Gui(){
-
         String fileName = "src/main/ressources/guiTekst.txt";
         File file = new File(fileName);
         String line;
@@ -32,7 +31,6 @@ public class Gui {
         } catch (IOException ex){
             System.out.println("error reading file '" + fileName + "'");
         }
-
 
         fields = new GUI_Field[24];
 
@@ -203,13 +201,56 @@ public class Gui {
         player = new GUI_Player[players];
     }
 
-    public void createSpiller(int number,String name, int balance, Color color){
+    public void createSpiller(int number, String name, int balance, Color color){
         GUI_Car car = new GUI_Car(color, color, GUI_Car.Type.CAR, GUI_Car.Pattern.FILL);
         player[number - 1] = new GUI_Player(name, balance, car);
         gui.addPlayer(player[number -1]);
         fields[0].setCar(player[number - 1], true);
-        fields[0].hasCar(player[number-1]);
     }
 
+    public void setBalance(int number, int balance){
+        player[number -1].setBalance(balance);
+    }
+
+    public void moveCar(int number, int removeFrom, int moveTo){
+        fields[removeFrom].setCar(player[number -1], false);
+        fields[moveTo].setCar(player[number -1], true);
+    }
+
+    public void setDie(int value){
+        gui.setDie(value);
+    }
+
+    public void displayChangecard(String txt){
+        gui.displayChanceCard(txt);
+    }
+
+    public String getUserName(String txt){
+        return gui.getUserString(txt);
+    }
+
+    public void getInput(String txt){
+        gui.getUserButtonPressed(txt);
+    }
+
+    public int getTotalPlayers(String txt){
+        return Integer.parseInt(gui.getUserSelection(txt, "2", "3", "4"));
+    }
+
+    public void showWinner(String txt){
+        gui.showMessage(txt);
+    }
+
+    public String getName(int number){
+        return player[number - 1].getName();
+    }
+
+    public int getBalance(int number){
+        return player[number -1].getBalance();
+    }
+
+    public Color getCarColor(int number){
+        return (player[number -1].getCar()).getPrimaryColor();
+    }
 
 }
