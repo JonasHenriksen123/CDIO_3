@@ -7,6 +7,9 @@ import java.awt.*;
 import java.io.*;
 
 public class Gui {
+    private GUI_Player[] player;
+    private GUI gui;
+    private GUI_Field[] fields;
 
     public Gui(){
 
@@ -31,7 +34,7 @@ public class Gui {
         }
 
 
-        GUI_Field[] fields = new GUI_Field[24];
+        fields = new GUI_Field[24];
 
         GUI_Start start = new GUI_Start();
         start.setTitle(text[0]);
@@ -193,6 +196,20 @@ public class Gui {
         strand.setBackGroundColor(Color.cyan);
         fields[23] = strand;
 
-        GUI gui = new GUI(fields, Color.darkGray);
+        gui = new GUI(fields, Color.darkGray);
     }
+
+    public void setPlayers(int players){
+        player = new GUI_Player[players];
+    }
+
+    public void createSpiller(int number,String name, int balance, Color color){
+        GUI_Car car = new GUI_Car(color, color, GUI_Car.Type.CAR, GUI_Car.Pattern.FILL);
+        player[number - 1] = new GUI_Player(name, balance, car);
+        gui.addPlayer(player[number -1]);
+        fields[0].setCar(player[number - 1], true);
+        fields[0].hasCar(player[number-1]);
+    }
+
+
 }
