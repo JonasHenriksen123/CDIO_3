@@ -13,7 +13,7 @@ public class Spilplade {
         linkFelter();
     }
 
-    public Felt getFelt(Felt start, int distance)
+    public Felt getFelt(com.company.Felter start, int distance)
     {
         int endIndex = (start.getIndex() + distance) % SIZE;
         return (Felt) Felter.get(endIndex);

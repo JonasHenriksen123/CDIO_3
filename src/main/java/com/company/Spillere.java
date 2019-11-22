@@ -6,44 +6,28 @@ import java.util.Scanner;
 
 public class Spillere {
 
-    public class Player
-    {
-        private String name;
-        private Brik  brik;
-        private Spilplade  spilplade;
-        private Terning[]  terning;
+    private int playerId;
+    private String name;
+    private static int createdAmount = 1;
 
-        public Player(String name, Die[] dice, Board board)
-        {
-            this.name = name;
-            this.terning = dice;
-            this.spilplade = board;
-            brik = new Brik(board.getStartSquare());
-        }
 
-        public void takeTurn()
-        {
-            // roll dice
-            int rollTotal = 0;
-            for (int i = 0; i < dice.length; i++)
-            {
-                dice[i].roll();
-                rollTotal += dice[i].getFaceValue();
-            }
+    public static void createPlayer(){
 
-            Felter newLoc = board.getSquare(piece.getLocation(), rollTotal);
-            piece.setLocation(newLoc);
+        Scanner input = new Scanner(System.in);
+        int playerAmount = input.nextInt();
+        List<List> listofPlayers = new ArrayList<List>();
+
+        ArrayList<String> playerId = new ArrayList<String>();
+        ArrayList<String> playerName = new ArrayList<String>();
+
+        for (createdAmount = 1; createdAmount == playerAmount; createdAmount++ ){
+
+            listofPlayers.add(playerId);
+            listofPlayers.add(playerName);
+
 
         }
-
-        public Felter getLocation()
-        {
-            return brik.getLocation();
-        }
-
-        public String getName()
-        {
-            return name;
+    }
         }
 
     }
