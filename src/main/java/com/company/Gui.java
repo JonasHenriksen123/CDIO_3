@@ -4,173 +4,192 @@ import gui_fields.*;
 import gui_main.GUI;
 
 import java.awt.*;
+import java.io.*;
 
 public class Gui {
 
     public Gui(){
 
+        String fileName = "src/main/ressources/guiTekst.txt";
+        File file = new File(fileName);
+        String line;
+        String[] text = new String[27];
+        try {
+            FileReader fileReader = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+            for (int i = 0; (line = bufferedReader.readLine()) != null; i++){
+                text[i] = line;
+            }
+
+            bufferedReader.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to open file '" + fileName + "'");
+        } catch (IOException ex){
+            System.out.println("error reading file '" + fileName + "'");
+        }
+
 
         GUI_Field[] fields = new GUI_Field[24];
 
         GUI_Start start = new GUI_Start();
-        start.setTitle("Start");
-        start.setSubText("Modtag 2$");
-        start.setDescription("Modtag 2$ hver gang du passerer eller lander på start");
+        start.setTitle(text[0]);
+        start.setSubText(text[1]);
+        start.setDescription(text[2]);
         fields[0] = start;
 
         GUI_Street burger = new GUI_Street();
-        burger.setTitle("Burgerbaren");
+        burger.setTitle(text[3]);
         burger.setSubText("1$");
-        burger.setDescription("Burgerbaren");
+        burger.setDescription(text[3]);
         burger.setBackGroundColor(Color.blue);
         fields[1] = burger;
 
         GUI_Street pizzeriaet = new GUI_Street();
-        pizzeriaet.setTitle("Pizzeriaet");
+        pizzeriaet.setTitle(text[4]);
         pizzeriaet.setSubText("1$");
-        pizzeriaet.setDescription("Pizzeriaet");
+        pizzeriaet.setDescription(text[4]);
         pizzeriaet.setBackGroundColor(Color.blue);
         fields[2] = pizzeriaet;
 
         GUI_Chance chance1 = new GUI_Chance();
-        chance1.setTitle("Chance");
+        chance1.setTitle(text[5]);
         chance1.setSubText("");
-        chance1.setDescription("Træk et chancekort");
+        chance1.setDescription(text[6]);
         fields[3] = chance1;
 
         GUI_Street slikbutikken = new GUI_Street();
-        slikbutikken.setTitle("Slikbutikken");
+        slikbutikken.setTitle(text[7]);
         slikbutikken.setSubText("1$");
-        slikbutikken.setDescription("Slikbutikken");
+        slikbutikken.setDescription(text[7]);
         slikbutikken.setBackGroundColor(Color.orange);
         fields[4] = slikbutikken;
 
         GUI_Street iskiosken = new GUI_Street();
-        iskiosken.setTitle("Iskiosken");
+        iskiosken.setTitle(text[8]);
         iskiosken.setSubText("1$");
-        iskiosken.setDescription("Iskiosken");
+        iskiosken.setDescription(text[8]);
         iskiosken.setBackGroundColor(Color.orange);
         fields[5] = iskiosken;
 
         GUI_Jail faengsel = new GUI_Jail();
-        faengsel.setTitle("Fængsel");
-        faengsel.setSubText("Fængsel");
-        faengsel.setDescription("Hvis du lander her er du bare på besøg");
+        faengsel.setTitle(text[9]);
+        faengsel.setSubText(text[9]);
+        faengsel.setDescription(text[10]);
         fields[6] = faengsel;
 
         GUI_Street museet = new GUI_Street();
-        museet.setTitle("Museet");
+        museet.setTitle(text[11]);
         museet.setSubText("2$");
-        museet.setDescription("Museet");
+        museet.setDescription(text[11]);
         museet.setBackGroundColor(Color.magenta);
         fields[7] = museet;
 
         GUI_Street biblio = new GUI_Street();
-        biblio.setTitle("Biblioteket");
+        biblio.setTitle(text[12]);
         biblio.setSubText("2$");
-        biblio.setDescription("Biblioteket");
+        biblio.setDescription(text[12]);
         biblio.setBackGroundColor(Color.magenta);
         fields[8] = biblio;
 
         GUI_Chance chance2 = new GUI_Chance();
-        chance2.setTitle("Chance");
+        chance2.setTitle(text[5]);
         chance2.setSubText("");
-        chance2.setDescription("Træk et chancekort");
+        chance2.setDescription(text[6]);
         fields[9] = chance2;
 
         GUI_Street skate = new GUI_Street();
-        skate.setTitle("Skaterparken");
+        skate.setTitle(text[13]);
         skate.setSubText("2$");
-        skate.setDescription("Skaterparken");
+        skate.setDescription(text[13]);
         skate.setBackGroundColor(Color.red);
         fields[10] = skate;
 
         GUI_Street swim = new GUI_Street();
-        swim.setTitle("Swimmingpoolen");
+        swim.setTitle(text[14]);
         swim.setSubText("2$");
-        swim.setDescription("Swimmingpoolen");
+        swim.setDescription(text[14]);
         swim.setBackGroundColor(Color.red);
         fields[11] = swim;
 
         GUI_Refuge parkering = new GUI_Refuge();
-        parkering.setTitle("Gratis parkering");
-        parkering.setSubText("Gratis parkering");
-        parkering.setDescription("Du behøver ikke gøre noget, snup dig en pause");
+        parkering.setTitle(text[15]);
+        parkering.setSubText(text[15]);
+        parkering.setDescription(text[16]);
         fields[12] = parkering;
 
         GUI_Street spil = new GUI_Street();
-        spil.setTitle("Spillehallen");
+        spil.setTitle(text[17]);
         spil.setSubText("3$");
-        spil.setDescription("Spillehallen");
+        spil.setDescription(text[17]);
         spil.setBackGroundColor(Color.YELLOW);
         fields[13] = spil;
 
         GUI_Street bio = new GUI_Street();
-        bio.setTitle("Biografen");
+        bio.setTitle(text[18]);
         bio.setSubText("3$");
-        bio.setDescription("Biografen");
+        bio.setDescription(text[18]);
         bio.setBackGroundColor(Color.YELLOW);
         fields[14] = bio;
 
         GUI_Chance chance3 = new GUI_Chance();
-        chance3.setTitle("Chance");
+        chance3.setTitle(text[5]);
         chance3.setSubText("");
-        chance3.setDescription("Træk et chancekort");
+        chance3.setDescription(text[6]);
         fields[15] = chance3;
 
         GUI_Street lege = new GUI_Street();
-        lege.setTitle("Legetøjsbutikken");
+        lege.setTitle(text[19]);
         lege.setSubText("3$");
-        lege.setDescription("Legetøjsbutikken");
+        lege.setDescription(text[19]);
         lege.setBackGroundColor(Color.GREEN);
         fields[16] = lege;
 
         GUI_Street dyr = new GUI_Street();
-        dyr.setTitle("Dyrehandlen");
+        dyr.setTitle(text[20]);
         dyr.setSubText("3$");
-        dyr.setDescription("Dyrehandlen");
+        dyr.setDescription(text[20]);
         dyr.setBackGroundColor(Color.GREEN);
         fields[17] = dyr;
 
         GUI_Tax move = new GUI_Tax();
-        move.setTitle("Gå i fængsel");
+        move.setTitle(text[21]);
         move.setSubText("");
-        move.setDescription("Gå lige i fængsel! Du passerer ikke START. Du modtager ikke 2$. I starten af din næste tur skal du betale " +
-                "1$ eller bruge 'Du løslades uden omkostninger'-kortet, hvis du har det. Kast derefter terningen, og ryk som normalt. " +
-                "Du kan godt modtage husleje, mens du er i fængsel");
+        move.setDescription(text[22]);
         fields[18] = move;
 
         GUI_Street bowling = new GUI_Street();
-        bowling.setTitle("Bowlinghallen");
+        bowling.setTitle(text[23]);
         bowling.setSubText("4$");
-        bowling.setDescription("Bowlinghallen");
+        bowling.setDescription(text[23]);
         bowling.setBackGroundColor(Color.PINK);
         fields[19] = bowling;
 
         GUI_Street zoo = new GUI_Street();
-        zoo.setTitle("Zoo");
+        zoo.setTitle(text[24]);
         zoo.setSubText("4$");
-        zoo.setDescription("Zoo");
+        zoo.setDescription(text[24]);
         zoo.setBackGroundColor(Color.PINK);
         fields[20] = zoo;
 
         GUI_Chance chance4 = new GUI_Chance();
-        chance4.setTitle("Chance");
+        chance4.setTitle(text[5]);
         chance4.setSubText("");
-        chance4.setDescription("Træk et chancekort");
+        chance4.setDescription(text[6]);
         fields[21] = chance4;
 
         GUI_Street vand = new GUI_Street();
-        vand.setTitle("Vandlandet");
+        vand.setTitle(text[25]);
         vand.setSubText("4$");
-        vand.setDescription("Vandlandet");
+        vand.setDescription(text[25]);
         vand.setBackGroundColor(Color.cyan);
         fields[22] = vand;
 
         GUI_Street strand = new GUI_Street();
-        strand.setTitle("Strandpromenaden");
+        strand.setTitle(text[26]);
         strand.setSubText("4$");
-        strand.setDescription("Strandpromenaden");
+        strand.setDescription(text[26]);
         strand.setBackGroundColor(Color.cyan);
         fields[23] = strand;
 
