@@ -199,6 +199,7 @@ public class Gui {
 
     public void setPlayers(int players){
         player = new GUI_Player[players];
+        makeColors(players);
     }
 
     public void createSpiller(int number, String name, int balance, Color color){
@@ -237,18 +238,94 @@ public class Gui {
         return Integer.parseInt(gui.getUserSelection(txt, "2", "3", "4"));
     }
 
+    public Color getPlayerColor(String txt, int numberPlayers){
+        int i = 0;
+        int[] color= new int[numberPlayers];
+        switch (numberPlayers){
+            case 4:
+                if (colors[3]){
+                    i++;
+                    color[3] = 4;
+                }
+            case 3:
+                if (colors[2]){
+                    i++;
+                    color[2] = 3;
+                }
+            case 2:
+                if (colors[1]){
+                    i++;
+                    color[1] = 2;
+                }
+                if (colors[0]){
+                    i++;
+                    color[0] = 1;
+                }
+        }
+        int[] options = new int[i];
+        int choices = i;
+        switch (numberPlayers){
+            case 4:
+               for (int counter = 0; counter <= 4; counter++){
+                   if (colors[counter]){
+                       options[i - 1] = color[counter];
+                       i--;
+                   }
+               }
+               break;
+            case 3:
+                for (int counter = 0; counter <= 3; counter++){
+                    if (colors[counter]){
+                        options[i -1] = color[counter];
+                        i--;
+                    }
+                }
+                break;
+            case 2:
+                for (int counter = 0; counter <= 2; counter++){
+                    if (colors[counter]){
+                        options[i -1] = color[counter];
+                        i--;
+                    }
+                }
+                break;
+        }
+        switch (choices){
+            case 4:
+                gui.getUserSelection(txt, "options[0]", "options[1]", "options[2]", "options[3]");
+        }
+    }
+
+    private boolean[] colors;
+
+    private void makeColors(int numberPlayers){
+        colors = new boolean[numberPlayers];
+        switch (numberPlayers){
+            case 4:
+                colors[3] = true;
+            case 3:
+                colors[2] = true;
+            case 2:
+                colors[1] = true;
+                colors[0] = true;
+        }
+    }
+
     public void showWinner(String txt){
         gui.showMessage(txt);
     }
 
+    //Bruges til junit test
     public String getName(int number){
         return player[number - 1].getName();
     }
 
+    //Bruges til junit test
     public int getBalance(int number){
         return player[number -1].getBalance();
     }
 
+    //Bruges til junit test
     public Color getCarColor(int number){
         return (player[number -1].getCar()).getPrimaryColor();
     }
