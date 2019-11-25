@@ -6,12 +6,13 @@ import gui_main.GUI;
 import java.awt.*;
 import java.io.*;
 
-public class Gui {
+public class GuiController {
     private GUI_Player[] player;
     private GUI gui;
     private GUI_Field[] fields;
+    private boolean[] colors;
 
-    public Gui(){
+    public GuiController(){
         String fileName = "src/main/ressources/guiTekst.txt";
         File file = new File(fileName);
         String line;
@@ -194,7 +195,7 @@ public class Gui {
         strand.setBackGroundColor(Color.cyan);
         fields[23] = strand;
 
-        gui = new GUI(fields, Color.darkGray);
+        gui = new GUI(fields, Color.white);
     }
 
     public void setPlayers(int players){
@@ -262,41 +263,44 @@ public class Gui {
                     color[0] = 1;
                 }
         }
+
         int[] options = new int[i];
         int choices = i;
-        switch (numberPlayers){
-            case 4:
-               for (int counter = 0; counter <= 4; counter++){
-                   if (colors[counter]){
-                       options[i - 1] = color[counter];
-                       i--;
-                   }
-               }
-               break;
-            case 3:
-                for (int counter = 0; counter <= 3; counter++){
-                    if (colors[counter]){
-                        options[i -1] = color[counter];
-                        i--;
-                    }
-                }
-                break;
-            case 2:
-                for (int counter = 0; counter <= 2; counter++){
-                    if (colors[counter]){
-                        options[i -1] = color[counter];
-                        i--;
-                    }
-                }
-                break;
+
+        for (int counter = 0; counter < numberPlayers; counter++){
+            if (colors[counter]){
+                options[i - 1] = color[counter];
+                i--;
+            }
         }
+
+        int choice;
         switch (choices){
             case 4:
-                gui.getUserSelection(txt, "options[0]", "options[1]", "options[2]", "options[3]");
+                choice = Integer.parseInt(gui.getUserSelection(txt, String.valueOf(options[3]), String.valueOf(options[2]), String.valueOf(options[1]), String.valueOf(options[0])));
+                break;
+            case 3:
+                choice = Integer.parseInt(gui.getUserSelection(txt, String.valueOf(options[2]), String.valueOf(options[1]), String.valueOf(options[0])));
+                break;
+            case 2:
+                choice = Integer.parseInt(gui.getUserSelection(txt, String.valueOf(options[1]), String.valueOf(options[0])));
+                break;
+            default:
+                choice = options[0];
+                break;
+        }
+
+        switch (choice){
+            case 4:
+                return Color.red;
+            case 3:
+                return Color.blue;
+            case 2:
+                return Color.pink;
+            default:
+                return Color.green;
         }
     }
-
-    private boolean[] colors;
 
     private void makeColors(int numberPlayers){
         colors = new boolean[numberPlayers];
