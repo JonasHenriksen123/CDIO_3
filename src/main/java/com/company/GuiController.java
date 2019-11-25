@@ -292,12 +292,16 @@ public class GuiController {
 
         switch (choice){
             case 4:
+                colors[3] = false;
                 return Color.red;
             case 3:
+                colors[2] = false;
                 return Color.blue;
             case 2:
+                colors[1] = false;
                 return Color.pink;
             default:
+                colors[0] = false;
                 return Color.green;
         }
     }
