@@ -5,7 +5,7 @@ public class MonopolySpil {
 
     private List				players		 = new ArrayList( PLAYERS_TOTAL );
     private Board					board		= new Board(  );
-    private Die[]					dice		= { new Die(), new Die() };
+    private Terning					dice		= ;
 
     public MonopolySpil(  )
     {

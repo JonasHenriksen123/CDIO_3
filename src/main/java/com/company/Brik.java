@@ -2,19 +2,19 @@ package com.company;
 
 public class Brik {
 
-    private Felter location;
+    private Felt location;
 
-  public Brik(Felter location)
+  public Brik(Felt location)
         {
             this.location = location;
         }
 
-        public Felter getLocation()
+        public Felt getLocation()
         {
             return location;
         }
 
-        public void setLocation(Felter location)
+        public void setLocation(Felt location)
         {
             this.location = location;
         }

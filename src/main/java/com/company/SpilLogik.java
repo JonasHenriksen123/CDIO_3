@@ -7,14 +7,11 @@ import java.util.Scanner;
 public class SpilLogik {
     private int playerAmount;
 
-    public int PlayerAmount() {
-        Scanner input = new Scanner(System.in);
-        int playerAmount = 3; //input.nextInt();
-        return playerAmount;
+    public void setPlayerAmount(int players) { ;
+        int playerAmount = players;
     }
 
     public int getPlayerAmount() {
-
         return playerAmount;
     }
 

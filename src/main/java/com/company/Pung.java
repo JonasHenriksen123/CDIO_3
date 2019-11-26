@@ -1,23 +1,20 @@
 package com.company;
 
 public class Pung {
-Spillogik Logik = new Spillogik();
+    private int balance;
 
-
-public int startingWallet(){
-
-    if(PlayerAmount == 2){
-        setStartingwallet(20);
+    public Pung(){
     }
 
-    if(playerAmount == 3){
-        setStartingwallet(18);
-    }
-    if(playerAmount == 4){
-        setStartingwallet(16);
+    public void setBalance(int modifier){
+        balance = modifier;
     }
 
+    public void addToBalance(int modifier){
+        balance += modifier;
+    }
 
-return setStartingwallet;
-}
+    public int getBalance(){
+        return balance;
+    }
 }
