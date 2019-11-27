@@ -32,7 +32,7 @@ public class Main {
 
         String[] winnerNames = new String[winners];
         int i = winners;
-        switch (winners){
+        switch (numberPlayers){
             case 3:
                 if (monopolySpil.getPlayerBalance(4) == highestValue){
                     winnerNames[i - 1] = monopolySpil.getPlayerName(4);
