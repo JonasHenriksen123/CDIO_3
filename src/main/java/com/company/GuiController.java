@@ -198,6 +198,10 @@ public class GuiController {
         gui = new GUI(fields, Color.white);
     }
 
+    public void setOwner(String name, int field){
+        fields[field - 1].setSubText(name);
+    }
+
     public void setPlayers(int players){
         player = new GUI_Player[players];
         makeColors(players);
@@ -241,30 +245,30 @@ public class GuiController {
 
     public Color getPlayerColor(String txt, int numberPlayers){
         int i = 0;
-        int[] color= new int[numberPlayers];
+        String[] color= new String[numberPlayers];
         switch (numberPlayers){
             case 4:
                 if (colors[3]){
                     i++;
-                    color[3] = 4;
+                    color[3] = "red";
                 }
             case 3:
                 if (colors[2]){
                     i++;
-                    color[2] = 3;
+                    color[2] = "blue";
                 }
             case 2:
                 if (colors[1]){
                     i++;
-                    color[1] = 2;
+                    color[1] = "pink";
                 }
                 if (colors[0]){
                     i++;
-                    color[0] = 1;
+                    color[0] = "green";
                 }
         }
 
-        int[] options = new int[i];
+        String[] options = new String[i];
         int choices = i;
 
         for (int counter = 0; counter < numberPlayers; counter++){
@@ -274,20 +278,30 @@ public class GuiController {
             }
         }
 
-        int choice;
+        int choice = 0;
+        String colorchoice;
         switch (choices){
             case 4:
-                choice = Integer.parseInt(gui.getUserSelection(txt, String.valueOf(options[3]), String.valueOf(options[2]), String.valueOf(options[1]), String.valueOf(options[0])));
+                colorchoice = gui.getUserSelection(txt, String.valueOf(options[3]), String.valueOf(options[2]), String.valueOf(options[1]), String.valueOf(options[0]));
                 break;
             case 3:
-                choice = Integer.parseInt(gui.getUserSelection(txt, String.valueOf(options[2]), String.valueOf(options[1]), String.valueOf(options[0])));
+                colorchoice = gui.getUserSelection(txt, String.valueOf(options[2]), String.valueOf(options[1]), String.valueOf(options[0]));
                 break;
             case 2:
-                choice = Integer.parseInt(gui.getUserSelection(txt, String.valueOf(options[1]), String.valueOf(options[0])));
+                colorchoice = gui.getUserSelection(txt, String.valueOf(options[1]), String.valueOf(options[0]));
                 break;
             default:
-                choice = options[0];
+                colorchoice = options[0];
                 break;
+        }
+        if (colorchoice.equals("red")){
+            choice = 4;
+        } if (colorchoice.equals("blue")){
+            choice = 3;
+        } if (colorchoice.equals("pink")){
+            choice = 2;
+        } if (colorchoice.equals("green")){
+            choice =1;
         }
 
         switch (choice){

@@ -24,6 +24,10 @@ public class MonopolySpil {
         terning.roll();
     }
 
+    public String getFeltNavn(int index){
+        return spilplade.getFeltName(index);
+    }
+
     public int getDiceValue(){
         return terning.getFaceValue();
     }
@@ -32,14 +36,22 @@ public class MonopolySpil {
         players[spiller -1] = new Spiller(navn);
     }
 
-    public String traekChancekort(int player){
+    public boolean getPassedStart(int player){
+        return players[player - 1].getPassedStart();
+    }
+
+    public int traekChancekort(int player){
         int i = (int) ((Math.random()*6)+1);
         if (i == 3){
             this.players[player - 1].setFreeOutJail(true);
         } else {
 
         }
-        return chancekort[i - 1].getName();
+        return i;
+    }
+
+    public String getChancekortTekst(int kort){
+        return chancekort[kort - 1].getName();
     }
 
     public int getPlayerBalance(int player){
@@ -48,6 +60,54 @@ public class MonopolySpil {
 
     public void setPlayersBalance(int player, int modifier){
         players[player -1].setBalance(modifier);
+    }
+
+    public void addToPlayerBalance(int player, int modifier){
+        players[player - 1].addToBalance(modifier);
+    }
+
+    public String getPlayerName(int player){
+        return players[player -1].getName();
+    }
+
+    public void setPlayerBrik(int player, int newField){
+        players[player - 1].setBrikLocation(newField);
+    }
+
+    public int getPlayerBrik(int player){
+        return players[player - 1].getBrikLocation();
+    }
+
+    public boolean getFreeOutOfJail(int player){
+        return players[player - 1].getFreeOutJail();
+    }
+
+    public boolean getKeepEffect(int card){
+        return chancekort[ card - 1].getKeepEffect();
+    }
+
+    public int getSoesterFelt(int index){
+        return spilplade.getSoesterfelt(index);
+    }
+
+    public int getPris(int index){
+        return spilplade.getPris(index);
+    }
+
+    public void setOwned(int index){
+        spilplade.setOwned(index);
+    }
+
+    public boolean getOwned(int index){
+        return spilplade.getOwned(index);
+    }
+
+    public void setOwner(int index, int player){
+        spilplade.setOwner(index, player);
+    }
+
+    public int getOwner(int index){
+        return spilplade.getOwner(index);
     }
 
 

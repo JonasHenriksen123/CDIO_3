@@ -44,6 +44,10 @@ public class Spiller {
         return brik.getBrikLocation();
     }
 
+    public boolean getPassedStart(){
+        return  brik.getPassedStart();
+    }
+
     public boolean getFreeOutJail(){
         return freeOutJail;
     }

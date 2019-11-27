@@ -1,0 +1,4 @@
+Vælg antal spillere
+Indtast spillernavne i orden efter alder. Lavest til højest
+Indtast navn på spiller
+Vælg farve til spiller
