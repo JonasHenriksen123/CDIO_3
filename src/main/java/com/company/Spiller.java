@@ -6,13 +6,13 @@ import java.util.Scanner;
 
 public class Spiller {
 
-    private int playerId;
     private String name;
     private Pung pung;
+    private Brik brik = new Brik();
+    private boolean freeOutJail = false;
 
-    public void createPlayer(int playerId, String name){
+    public Spiller(String name){
         pung = new Pung();
-        this.playerId = playerId;
         this.name = name;
     }
 
@@ -32,12 +32,24 @@ public class Spiller {
         return name;
     }
 
-    public int getPlayerId(){
-        return playerId;
+    public String toString(){
+        return name + pung;
     }
 
-    public String toString(){
-        return playerId + name + pung;
+    public void setBrikLocation(int modifier) {
+        brik.setBrikLocation(modifier);
+    }
+
+    public int getBrikLocation(){
+        return brik.getBrikLocation();
+    }
+
+    public boolean getFreeOutJail(){
+        return freeOutJail;
+    }
+
+    public  void setFreeOutJail(Boolean modify){
+        freeOutJail = modify;
     }
 }
 

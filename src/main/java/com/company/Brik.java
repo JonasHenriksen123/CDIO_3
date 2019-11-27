@@ -2,23 +2,24 @@ package com.company;
 
 public class Brik {
 
-    private Felt location;
+    private int location;
 
-  public Brik(Felt location)
-        {
-            this.location = location;
-        }
+    public Brik() {
+        location = 1;
+    }
 
-        public Felt getLocation()
-        {
-            return location;
-        }
-
-        public void setLocation(Felt location)
-        {
-            this.location = location;
+    public void setBrikLocation(int modifier){
+        if ((location += modifier) > 24){
+            location += modifier - 24;
+        } else {
+          location += modifier;
         }
     }
+
+    public int getBrikLocation(){
+        return location;
+    }
+}
 
 
 
