@@ -11,12 +11,13 @@ public class GuiController {
     private GUI gui;
     private GUI_Field[] fields;
     private boolean[] colors;
+    private String[] text;
 
     public GuiController(){
         String fileName = "src/main/ressources/guiTekst.txt";
         File file = new File(fileName);
         String line;
-        String[] text = new String[27];
+        text = new String[32];
         try {
             FileReader fileReader = new FileReader(file);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -219,8 +220,8 @@ public class GuiController {
     }
 
     public void moveCar(int number, int removeFrom, int moveTo){
-        fields[removeFrom].setCar(player[number -1], false);
-        fields[moveTo].setCar(player[number -1], true);
+        fields[removeFrom - 1].setCar(player[number -1], false);
+        fields[moveTo -1 ].setCar(player[number -1], true);
     }
 
     public void setDie(int value){
@@ -236,7 +237,7 @@ public class GuiController {
     }
 
     public void getInput(String txt){
-        gui.getUserButtonPressed(txt);
+        gui.getUserButtonPressed(txt, text[31]);
     }
 
     public int getTotalPlayers(String txt){
@@ -250,21 +251,21 @@ public class GuiController {
             case 4:
                 if (colors[3]){
                     i++;
-                    color[3] = "red";
+                    color[3] = text[27];
                 }
             case 3:
                 if (colors[2]){
                     i++;
-                    color[2] = "blue";
+                    color[2] = text[28];
                 }
             case 2:
                 if (colors[1]){
                     i++;
-                    color[1] = "pink";
+                    color[1] = text[29];
                 }
                 if (colors[0]){
                     i++;
-                    color[0] = "green";
+                    color[0] = text[30];
                 }
         }
 
@@ -294,13 +295,13 @@ public class GuiController {
                 colorchoice = options[0];
                 break;
         }
-        if (colorchoice.equals("red")){
+        if (colorchoice.equals(text[27])){
             choice = 4;
-        } if (colorchoice.equals("blue")){
+        } if (colorchoice.equals(text[28])){
             choice = 3;
-        } if (colorchoice.equals("pink")){
+        } if (colorchoice.equals(text[29])){
             choice = 2;
-        } if (colorchoice.equals("green")){
+        } if (colorchoice.equals(text[30])){
             choice =1;
         }
 

@@ -3,7 +3,7 @@ package com.company;
 public class Felt {
     private String navn;
     private boolean owned = false;
-    private int owner;
+    private int owner = 0;
     private int soesterFelt;
     private int pris;
 
@@ -17,16 +17,13 @@ public class Felt {
         return navn;
     }
 
-    public void setOwned(){
-        owned = true;
-    }
-
     public boolean getOwned(){
         return owned;
     }
 
     public void setOwner(int player){
         owner = player;
+        owned = true;
     }
 
     public int getOwner(){

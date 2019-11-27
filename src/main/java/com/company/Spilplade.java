@@ -65,10 +65,6 @@ public class Spilplade {
         return felter[index - 1].getPris();
     }
 
-    public void setOwned(int index){
-        felter[index - 1].setOwned();
-    }
-
     public boolean getOwned(int index){
         return felter[index - 1].getOwned();
     }
@@ -78,6 +74,6 @@ public class Spilplade {
     }
 
     public int getOwner(int index){
-        return felter[index].getOwner();
+        return felter[index - 1].getOwner();
     }
 }

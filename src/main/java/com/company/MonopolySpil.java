@@ -16,6 +16,10 @@ public class MonopolySpil {
         lavChancekort();
     }
 
+    public void setBalance(int player, int modifier){
+        players[player -1].setBalance(modifier);
+    }
+
     public void saetSpillere(int spillere){
         players = new Spiller[spillere];
     }
@@ -40,14 +44,8 @@ public class MonopolySpil {
         return players[player - 1].getPassedStart();
     }
 
-    public int traekChancekort(int player){
-        int i = (int) ((Math.random()*6)+1);
-        if (i == 3){
-            this.players[player - 1].setFreeOutJail(true);
-        } else {
-
-        }
-        return i;
+    public int traekChancekort(){
+        return (int) ((Math.random()*6)+1);
     }
 
     public String getChancekortTekst(int kort){
@@ -56,10 +54,6 @@ public class MonopolySpil {
 
     public int getPlayerBalance(int player){
         return players[player - 1].getBalance();
-    }
-
-    public void setPlayersBalance(int player, int modifier){
-        players[player -1].setBalance(modifier);
     }
 
     public void addToPlayerBalance(int player, int modifier){
@@ -78,12 +72,12 @@ public class MonopolySpil {
         return players[player - 1].getBrikLocation();
     }
 
-    public boolean getFreeOutOfJail(int player){
-        return players[player - 1].getFreeOutJail();
+    public void setFreeOutJail(int player , boolean modifier){
+        players[player - 1].setFreeOutJail(modifier);
     }
 
-    public boolean getKeepEffect(int card){
-        return chancekort[ card - 1].getKeepEffect();
+    public boolean getFreeOutOfJail(int player){
+        return players[player - 1].getFreeOutJail();
     }
 
     public int getSoesterFelt(int index){
@@ -92,10 +86,6 @@ public class MonopolySpil {
 
     public int getPris(int index){
         return spilplade.getPris(index);
-    }
-
-    public void setOwned(int index){
-        spilplade.setOwned(index);
     }
 
     public boolean getOwned(int index){
@@ -108,6 +98,18 @@ public class MonopolySpil {
 
     public int getOwner(int index){
         return spilplade.getOwner(index);
+    }
+
+    public void setLocation(int player, int location){
+        players[player -1].setLocation(location);
+    }
+
+    public void setInJail(int player, boolean modifier){
+        players[player -1].setInJail(modifier);
+    }
+
+    public boolean getInJail(int player){
+        return players[player -1].getInJail();
     }
 
 
@@ -133,9 +135,7 @@ public class MonopolySpil {
         }
 
         for (int i = 0; i <= 5; i++){
-            boolean a;
-            a = i == 2;
-            chancekort[i] = new Chancekort(text[i], a);
+            chancekort[i] = new Chancekort(text[i]);
         }
     }
 }

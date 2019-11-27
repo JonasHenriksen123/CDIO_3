@@ -7,17 +7,21 @@ import java.util.Scanner;
 public class Spiller {
 
     private String name;
-    private Pung pung;
+    private Pung pung = new Pung();
     private Brik brik = new Brik();
     private boolean freeOutJail = false;
+    private boolean inJail = false;
 
     public Spiller(String name){
-        pung = new Pung();
         this.name = name;
     }
 
     public void setBalance(int modifier){
         pung.setBalance(modifier);
+    }
+
+    public void setLocation(int location){
+        brik.setLocation(location);
     }
 
     public void addToBalance(int modifier){
@@ -54,6 +58,14 @@ public class Spiller {
 
     public  void setFreeOutJail(Boolean modify){
         freeOutJail = modify;
+    }
+
+    public void setInJail(boolean modifier){
+        inJail = modifier;
+    }
+
+    public boolean getInJail(){
+        return inJail;
     }
 }
 
