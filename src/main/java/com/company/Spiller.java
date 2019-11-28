@@ -36,10 +36,6 @@ public class Spiller {
         return name;
     }
 
-    public String toString(){
-        return name + pung;
-    }
-
     public void setBrikLocation(int modifier) {
         brik.setBrikLocation(modifier);
     }

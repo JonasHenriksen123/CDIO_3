@@ -46,7 +46,7 @@ public class MonopolySpil {
     }
 
     public int traekChancekort(){
-        return (int) ((Math.random()*6)+1);
+        return (int) ((Math.random()*7)+1);
     }
 
     public String getChancekortTekst(int kort){
@@ -123,7 +123,7 @@ public class MonopolySpil {
         String fileName = "src/main/ressources/chancekortTekst.txt";
         File file = new File(fileName);
         String line;
-        String[] text = new String[6];
+        String[] text = new String[7];
         try {
             FileReader fileReader = new FileReader(file);
             BufferedReader bufferedReader = new BufferedReader(fileReader);

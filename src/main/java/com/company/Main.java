@@ -17,12 +17,16 @@ public class Main {
         endGame();
     }
 
+    //finder den spiller der har højst score og erklærer den for vinder.
     private static void endGame() {
+
+        //finder den score af spillerne der er højst
         int highestValue = Math.max(monopolySpil.getPlayerBalance(1), monopolySpil.getPlayerBalance(2));
         for (int i = 3; i <= numberPlayers; i++){
             highestValue = Math.max(monopolySpil.getPlayerBalance(i), highestValue);
         }
 
+        //finder ud af om der er flere spiller med den højeste score
         int winners = 0;
         for (int i = 1; i <= numberPlayers; i++){
             if (monopolySpil.getPlayerBalance(i) == highestValue){
@@ -30,29 +34,17 @@ public class Main {
             }
         }
 
+        //sætter navnene på vinder/vindere ind i et array
         String[] winnerNames = new String[winners];
         int i = winners;
-        switch (numberPlayers){
-            case 3:
-                if (monopolySpil.getPlayerBalance(4) == highestValue){
-                    winnerNames[i - 1] = monopolySpil.getPlayerName(4);
-                    i--;
-                }
-            case 2:
-                if (monopolySpil.getPlayerBalance(3) == highestValue) {
-                    winnerNames[i - 1] = monopolySpil.getPlayerName(3);
-                    i--;
-                }
-            default:
-                if (monopolySpil.getPlayerBalance(2) == highestValue) {
-                    winnerNames[i - 1] = monopolySpil.getPlayerName(2);
-                    i--;
-                }
-                if (monopolySpil.getPlayerBalance(1) == highestValue) {
-                    winnerNames[i - 1] = monopolySpil.getPlayerName(1);
-                }
+        for (int c = 1; c <= numberPlayers; c++){
+            if (monopolySpil.getPlayerBalance(c) == highestValue) {
+                winnerNames[i - 1] = monopolySpil.getPlayerName(c);
+                i--;
+            }
         }
 
+        //
         switch (winners) {
             case 3:
                 guiController.showWinner(winnerNames[0] + ", " + winnerNames[1] + " " + text[20] + " " + winnerNames[0] + " " + text[19] + " " + highestValue);
@@ -63,26 +55,34 @@ public class Main {
         }
     }
 
+    //styrer spilernes ture
     private static void playGame(){
-        for (int playerTurn = 1; playerTurn < 5; playerTurn++){
+
+        //loop der kører hver spillers tur efter valgte antal spillere
+        for (int playerTurn = 1; playerTurn <= numberPlayers; playerTurn++){
+            //fortæller hvilken spillers tur det er, og finder ud af om spilleren er blevet sendt i sidste tur
             guiController.getInput(text[4] + " " + monopolySpil.getPlayerName(playerTurn) + text[5]);
             inJail(playerTurn);
             if (banktrupcyCount != 0) { break; }
 
+            //ruller terningen bevæger spilleren og betaler for at passere start, hvis det er tilfældet
             monopolySpil.rollDice();
             guiController.setDie(monopolySpil.getDiceValue());
             guiController.getInput(text[11] + " " + monopolySpil.getDiceValue());
             moveCar(playerTurn);
             passStart(playerTurn);
 
+            //udfører en handling efter hvilket felt spilleren er landet på
             fieldAction(playerTurn);
             if (banktrupcyCount != 0) { break; }
             passStart(playerTurn);
 
+            //Får turen til at gå fra sidste spiller til første spiller
             playerTurn = turnReset(playerTurn);
         }
     }
 
+    //giver spiller penge for at passere start
     private  static void passStart(int playerTurn){
         if (monopolySpil.getPassedStart(playerTurn)){
             monopolySpil.addToPlayerBalance(playerTurn, 2);
@@ -90,12 +90,15 @@ public class Main {
         }
     }
 
+    //ser om spiller har været sendt i fængsel og om spilleren skal betale sig fri
     private static void inJail(int playerTurn){
        if (monopolySpil.getInJail(playerTurn)){
+           //hvis spilleren har et gratis fri ud af fængsel kort
            if (monopolySpil.getFreeOutOfJail(playerTurn)){
                guiController.getInput(text[13] + text[14]);
                monopolySpil.setFreeOutJail(playerTurn, false);
            }
+           //hvis spilleren skal betale sig fri
            else {
                if (checkBanktrupcy(playerTurn, 1)) {
                    guiController.getInput(text[13] + text[15]);
@@ -113,6 +116,7 @@ public class Main {
        }
     }
 
+    //flytter spillerens brik i monopolyspil og i gui
     private static void moveCar(int playerTurn){
         int moveFrom = monopolySpil.getPlayerBrik(playerTurn);
         monopolySpil.setPlayerBrik(playerTurn, monopolySpil.getDiceValue());
@@ -120,10 +124,12 @@ public class Main {
         guiController.moveCar(playerTurn, moveFrom, moveTo);
     }
 
+    //flytter spillerens brik i monopolyspil og i gui
     private static void moveCar(int playerTurn, int moveto, int moveFrom){
         guiController.moveCar(playerTurn, moveFrom, moveto);
     }
 
+    //sætter turen til første spiller når sidste spillers tur er slut
     private static int turnReset(int playerTurn){
         if (playerTurn == numberPlayers){
             return 0;
@@ -132,22 +138,27 @@ public class Main {
         }
     }
 
+    //bestem handling efter hvilken type felt der er landet på
     private static void fieldAction(int playerTurn){
         switch (monopolySpil.getPlayerBrik(playerTurn)){
-            //Handling for felter der er veje.
             case 2: case 3: case 5: case 6: case 8: case 9: case 11: case 12: case 14: case 15: case 17: case 18: case 20: case 21: case 23: case 24:
+                //Handling for felter der er veje.
                 vejFelter(playerTurn);
                 break;
             case 4: case 10: case 16: case 22:
+                //handling for chancefelter
                 chancekort(playerTurn);
                 break;
             case 19:
+                //handling for gå i fængsel
                 faengsel(playerTurn);
             default:
+                //felter der ikke påkræver en handling
                 break;
         }
     }
 
+    //sætter spilleren i fængsel
     private static  void faengsel(int playerTurn){
         guiController.getInput(text[7]);
         monopolySpil.setLocation(playerTurn, 7);
@@ -155,17 +166,20 @@ public class Main {
         monopolySpil.setInJail(playerTurn, true);
     }
 
+    //handlinger for chancekort
     private static void chancekort(int playerTurn){
         int chancekort = monopolySpil.traekChancekort();
                 guiController.displayChangecard(monopolySpil.getChancekortTekst(chancekort));
         switch (chancekort){
             case 1:
+                //ryk til start
                 int from = monopolySpil.getPlayerBrik(playerTurn);
                 monopolySpil.setPlayerBrik(playerTurn, 25 - from);
                 guiController.getInput(text[6]);
                 moveCar(playerTurn, 1, from);
                 break;
             case 2:
+                //betal to til banken
                 if (checkBanktrupcy(playerTurn, 2)) {
                     monopolySpil.addToPlayerBalance(playerTurn, -2);
                     guiController.getInput(text[6]);
@@ -179,10 +193,12 @@ public class Main {
                 }
                 break;
             case 3:
+                //få gratis ud af fængsel kort
                 monopolySpil.setFreeOutJail(playerTurn, true);
                 guiController.getInput(text[6]);
                 break;
             case 4:
+                //flyt til strandpromenaden
                 int from1 = monopolySpil.getPlayerBrik(playerTurn);
                 monopolySpil.setPlayerBrik(playerTurn, 24 - from1);
                 guiController.getInput(text[6]);
@@ -190,6 +206,7 @@ public class Main {
                 vejFelter(playerTurn);
                 break;
             case 5:
+                //alle andre spillere giver 1 penge til den spiller hvis tur det er
                 guiController.getInput(text[6]);
                 for (int i = 1; i <= numberPlayers; i++){
                     if (i == playerTurn){
@@ -211,12 +228,26 @@ public class Main {
                 updateBalances();
                 break;
             case 6:
+                //modtag 2 penge fra banken
                 guiController.getInput(text[6]);
                 monopolySpil.addToPlayerBalance(playerTurn, 2);
                 updateBalances();
                 break;
+            case 7:
+                //ryk til skaterparken og få den gratis hvis det ikke har en ejer, ellers betal husleje
+                int from2 = monopolySpil.getPlayerBrik(playerTurn);
+                monopolySpil.setPlayerBrik(playerTurn, 11 - from2);
+                guiController.getInput(text[6]);
+                moveCar(playerTurn, 11, from2);
+                if (!monopolySpil.getOwned(monopolySpil.getPlayerBrik(playerTurn))) {
+                    monopolySpil.setOwner(monopolySpil.getPlayerBrik(playerTurn), playerTurn);
+                } else {
+                    vejFelter(playerTurn);
+                }
+                break;
         }
     }
+
 
     private  static void vejFelter(int playerTurn){
         int field = monopolySpil.getPlayerBrik(playerTurn);
