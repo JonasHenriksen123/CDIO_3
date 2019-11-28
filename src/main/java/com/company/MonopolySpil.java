@@ -40,6 +40,7 @@ public class MonopolySpil {
         players[spiller -1] = new Spiller(navn);
     }
 
+    //henter information om at spilleren har passeret start
     public boolean getPassedStart(int player){
         return players[player - 1].getPassedStart();
     }
@@ -72,10 +73,12 @@ public class MonopolySpil {
         return players[player - 1].getBrikLocation();
     }
 
+    //sætter information om du har et get out of jail kort
     public void setFreeOutJail(int player , boolean modifier){
         players[player - 1].setFreeOutJail(modifier);
     }
 
+    //henter information fra setFreeOutJail og løslader spilleren hvis sand
     public boolean getFreeOutOfJail(int player){
         return players[player - 1].getFreeOutJail();
     }
@@ -104,10 +107,12 @@ public class MonopolySpil {
         players[player -1].setLocation(location);
     }
 
+    //sætter metoden sand eller falsk om spilleren har landet på gå i fængsel
     public void setInJail(int player, boolean modifier){
         players[player -1].setInJail(modifier);
     }
 
+    //henter information fra setInJail og sætter spilleren i fængsel
     public boolean getInJail(int player){
         return players[player -1].getInJail();
     }
