@@ -9,10 +9,14 @@ public class Brik {
     }
 
     public void setBrikLocation(int modifier){
+        //hvis spilleren passerer start
         if ((location + modifier) > 24){
             location += modifier - 24;
             passedStart = true;
-        } else {
+        }
+
+        //hvis spilleren ikke passerer start
+        else {
           location += modifier;
         }
     }
@@ -22,11 +26,14 @@ public class Brik {
     }
 
     public boolean getPassedStart(){
+        //hvis spilleren har passeret start
         if (passedStart) {
         passedStart = false;
         return true;
-        } else {
-            return false;
+        }
+        //hvis spilleren ikke har passeret start
+        else {
+            return passedStart;
         }
     }
 

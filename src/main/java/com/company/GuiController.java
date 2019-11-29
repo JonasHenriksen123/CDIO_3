@@ -13,6 +13,7 @@ public class GuiController {
     private boolean[] colors;
     private String[] text;
 
+    //constructor til klassen
     public GuiController(){
         String fileName = "src/main/ressources/guiTekst.txt";
         File file = new File(fileName);
@@ -197,88 +198,104 @@ public class GuiController {
         fields[23] = strand;
 
         gui = new GUI(fields, Color.white);
+
+        makeColors();
     }
 
+    //skriver på et felt hvem ejeren er
     public void setOwner(String name, int field){
         fields[field - 1].setSubText(name);
     }
 
+    //opretter et GUI_Player array efter hvor mange spillere der valgt
     public void setPlayers(int players){
         player = new GUI_Player[players];
-        makeColors(players);
     }
 
+    //opretter en spiller med et givent navn, nummer og farve
     public void createSpiller(int number, String name, int balance, Color color){
+        //opretter først en bil med valgt farve
         GUI_Car car = new GUI_Car(color, color, GUI_Car.Type.CAR, GUI_Car.Pattern.FILL);
+
+        //laver spilleren
         player[number - 1] = new GUI_Player(name, balance, car);
+
+        //tilføjer spilleren til GUIen og sætter bilens placering til felt 1
         gui.addPlayer(player[number -1]);
         fields[0].setCar(player[number - 1], true);
     }
 
+    //sætter en given spillers balance til et givent beløb
     public void setBalance(int number, int balance){
         player[number -1].setBalance(balance);
     }
 
+    //flytter en spillers bil til et nyt felt og fjerner den fra det forgående felt
     public void moveCar(int number, int removeFrom, int moveTo){
         fields[removeFrom - 1].setCar(player[number -1], false);
         fields[moveTo -1 ].setCar(player[number -1], true);
     }
 
+    //viser værdien af terningskastet på guien
     public void setDie(int value){
         gui.setDie(value);
     }
 
+    //viser et chancekorts tekst
     public void displayChangecard(String txt){
         gui.displayChanceCard(txt);
     }
 
+    //beder et givent spillernummer om deres navn og venter på svar
     public String getUserName(String txt){
         return gui.getUserString(txt);
     }
 
+    //viser spilleren en tekst og venter på de trykker på en knap
     public void getInput(String txt){
         gui.getUserButtonPressed(txt, text[31]);
     }
 
+    //spørger spillerne hvor mange spillere de er og venter på svar
     public int getTotalPlayers(String txt){
         return Integer.parseInt(gui.getUserSelection(txt, "2", "3", "4"));
     }
 
+    //beder et givent spillernumme om at valge en farve og venter på svar
     public Color getPlayerColor(String txt, int numberPlayers){
         int i = 0;
-        String[] color= new String[numberPlayers];
-        switch (numberPlayers){
-            case 4:
-                if (colors[3]){
-                    i++;
-                    color[3] = text[27];
-                }
-            case 3:
-                if (colors[2]){
-                    i++;
-                    color[2] = text[28];
-                }
-            case 2:
-                if (colors[1]){
-                    i++;
-                    color[1] = text[29];
-                }
-                if (colors[0]){
-                    i++;
-                    color[0] = text[30];
-                }
+
+        //laver et String array og tilføjer mulige farver til det
+        String[] color= new String[4];
+        if (colors[3]){
+            i++;
+            color[3] = text[27];
+        }
+        if (colors[2]){
+            i++;
+            color[2] = text[28];
+        }
+        if (colors[1]){
+            i++;
+            color[1] = text[29];
+        }
+        if (colors[0]){
+            i++;
+            color[0] = text[30];
         }
 
+        //tilføjer de ledige farver til et nyt string array med størrelsen antal ledige farver
         String[] options = new String[i];
         int choices = i;
-
-        for (int counter = 0; counter < numberPlayers; counter++){
+        for (int counter = 0; counter < 4; counter++){
             if (colors[counter]){
                 options[i - 1] = color[counter];
                 i--;
             }
         }
 
+        //beder spilleren om at vælge en farve, mulige farver kommer af hvor mange ledige farver der er og kun ledige farver bliver vist
+        //hvis der kun er en farve bliver denne aitomatisk valgt for spilleren
         int choice = 0;
         String colorchoice;
         switch (choices){
@@ -295,6 +312,8 @@ public class GuiController {
                 colorchoice = options[0];
                 break;
         }
+
+        //ser hvilken farve spilleren har valgt
         if (colorchoice.equals(text[27])){
             choice = 4;
         } if (colorchoice.equals(text[28])){
@@ -305,6 +324,7 @@ public class GuiController {
             choice =1;
         }
 
+        //returner hvilken farve der er valgt
         switch (choice){
             case 4:
                 colors[3] = false;
@@ -321,19 +341,16 @@ public class GuiController {
         }
     }
 
-    private void makeColors(int numberPlayers){
-        colors = new boolean[numberPlayers];
-        switch (numberPlayers){
-            case 4:
-                colors[3] = true;
-            case 3:
-                colors[2] = true;
-            case 2:
-                colors[1] = true;
-                colors[0] = true;
-        }
+    //opretter et boolean array, som bruges til at se om farver allerede er valgt
+    private void makeColors(){
+        colors = new boolean[4];
+        colors[3] = true;
+        colors[2] = true;
+        colors[1] = true;
+        colors[0] = true;
     }
 
+    //viser en tekst til spilleren hvor der står hvem der har vundet spillet
     public void showWinner(String txt){
         gui.showMessage(txt);
     }

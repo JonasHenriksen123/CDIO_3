@@ -10,7 +10,9 @@ public class Spilplade {
         bygFelter();
     }
 
+    //laver felter til brættet
     private void bygFelter() {
+        //henter tekst ti lfelter
         String fileName = "src/main/ressources/feltTekst.txt";
         File file = new File(fileName);
         String line;
@@ -30,15 +32,19 @@ public class Spilplade {
             System.out.println("error reading file '" + fileName + "'");
         }
 
+        //sætter felter ind i Felt array og finder om feltet har et søsterfelt og hvad nummer det har, finder feltets pris
         int soesterfelt = 0;
         int pris = 0;
         for (int i = 1; i <= SIZE; i++) {
+
+            //om feltet har et søsterfelt og søsterfelts nummer
             if (i % 3 == 0) {
                 soesterfelt = i - 1;
             } if ((i + 1) % 3 == 0) {
                 soesterfelt = i + 1;
             }
 
+            //finder om feltet har en pris og hvad prisen er
             if (soesterfelt + i == 5 || soesterfelt + i == 11){
                 pris = 1;
             } if (soesterfelt + i == 17 || soesterfelt + i == 23){

@@ -8,8 +8,9 @@ public class Main {
     private static int numberPlayers;
     private static MonopolySpil monopolySpil = new MonopolySpil();
     private static String[] text;
-    private static int banktrupcyCount = 0;
+    private static int bankruptcyCount = 0;
 
+    //kalder spillets metoder
     public static void main(String[] args){
         getGameText();
         setUpGame();
@@ -63,7 +64,7 @@ public class Main {
             //fortæller hvilken spillers tur det er, og finder ud af om spilleren er blevet sendt i sidste tur
             guiController.getInput(text[4] + " " + monopolySpil.getPlayerName(playerTurn) + text[5]);
             inJail(playerTurn);
-            if (banktrupcyCount != 0) { break; }
+            if (bankruptcyCount != 0) { break; }
 
             //ruller terningen bevæger spilleren og betaler for at passere start, hvis det er tilfældet
             monopolySpil.rollDice();
@@ -74,7 +75,7 @@ public class Main {
 
             //udfører en handling efter hvilket felt spilleren er landet på
             fieldAction(playerTurn);
-            if (banktrupcyCount != 0) { break; }
+            if (bankruptcyCount != 0) { break; }
             passStart(playerTurn);
 
             //Får turen til at gå fra sidste spiller til første spiller
@@ -100,13 +101,13 @@ public class Main {
            }
            //hvis spilleren skal betale sig fri
            else {
-               if (checkBanktrupcy(playerTurn, 1)) {
+               if (checkBankruptcy(playerTurn, 1)) {
                    guiController.getInput(text[13] + text[15]);
                    monopolySpil.addToPlayerBalance(playerTurn, -1);
                    updateBalances();
                } else {
                    monopolySpil.setBalance(playerTurn, 0);
-                   banktrupcyCount = 1;
+                   bankruptcyCount = 1;
                    monopolySpil.setBalance(playerTurn, 0);
                    updateBalances();
                    guiController.getInput(monopolySpil.getPlayerName(playerTurn) + " " + text[16]);
@@ -180,13 +181,13 @@ public class Main {
                 break;
             case 2:
                 //betal to til banken
-                if (checkBanktrupcy(playerTurn, 2)) {
+                if (checkBankruptcy(playerTurn, 2)) {
                     monopolySpil.addToPlayerBalance(playerTurn, -2);
                     guiController.getInput(text[6]);
                     updateBalances();
                 } else {
                     monopolySpil.setBalance(playerTurn, 0);
-                    banktrupcyCount = 1;
+                    bankruptcyCount = 1;
                     monopolySpil.setBalance(playerTurn, 0);
                     updateBalances();
                     guiController.getInput(monopolySpil.getPlayerName(playerTurn) + " " + text[21]);
@@ -213,12 +214,12 @@ public class Main {
                         monopolySpil.addToPlayerBalance(playerTurn, numberPlayers - 1);
                     }
                     if (i != playerTurn){
-                        if (checkBanktrupcy(i, 1)) {
+                        if (checkBankruptcy(i, 1)) {
                             monopolySpil.addToPlayerBalance(i, -1);
                         }
                         else {
                             monopolySpil.setBalance(playerTurn, 0);
-                            banktrupcyCount = 1;
+                            bankruptcyCount = 1;
                             monopolySpil.setBalance(i, 0);
                             updateBalances();
                             guiController.getInput(monopolySpil.getPlayerName(i) + " " + text[21]);
@@ -248,40 +249,58 @@ public class Main {
         }
     }
 
-
+    //handling for felter der kan ejes
     private  static void vejFelter(int playerTurn){
         int field = monopolySpil.getPlayerBrik(playerTurn);
+
+        //handlingr hvis felter ejees af en spiller
         if (monopolySpil.getOwned(field)){
+
+            //hvis spilleren selv ejer feltet
             if (monopolySpil.getOwner(field) == playerTurn){
                 guiController.getInput(text[12]);
             }
+
+            //hvis en anden spiller ejer feltet
             if (monopolySpil.getOwner(field) != playerTurn) {
                 int owner = monopolySpil.getOwner(field);
 
+                //hvis ejeren ejer begge felter af samme farve
                 if (owner == monopolySpil.getOwner(monopolySpil.getSoesterFelt(field))){
                     guiController.getInput(monopolySpil.getPlayerName(owner) + " " + text[10] + 2* monopolySpil.getPris(field));
-                    if (checkBanktrupcy(playerTurn,2 * monopolySpil.getPris(field))) {
+
+                    //hvis spilleren kan betale huslejen
+                    if (checkBankruptcy(playerTurn,2 * monopolySpil.getPris(field))) {
                         monopolySpil.addToPlayerBalance(owner, 2 * (monopolySpil.getPris(field)));
                         monopolySpil.addToPlayerBalance(playerTurn, -2 * (monopolySpil.getPris(field)));
-                        updateBalances();                    }
+                        updateBalances();
+                    }
+
+                    //hvis spilleren ikke kan betale husleje
                     else {
                         monopolySpil.setBalance(playerTurn, 0);
-                        banktrupcyCount = 1;
+                        bankruptcyCount = 1;
                         monopolySpil.setBalance(playerTurn, 0);
                         updateBalances();
                         guiController.getInput(monopolySpil.getPlayerName(playerTurn) + " " + text[17]);
                     }
                 }
+
+                //hvis ejeren ikke ejer begge felter af samme farve
                 if (owner != monopolySpil.getOwner(monopolySpil.getSoesterFelt(field))) {
                     guiController.getInput(monopolySpil.getPlayerName(owner) + " " + text[9] + monopolySpil.getPris(field));
-                    if (checkBanktrupcy(playerTurn,monopolySpil.getPris(field))) {
+
+                    //hvis spilleren kan betale husleje
+                    if (checkBankruptcy(playerTurn,monopolySpil.getPris(field))) {
                         monopolySpil.addToPlayerBalance(owner, monopolySpil.getPris(field));
                         monopolySpil.addToPlayerBalance(playerTurn, -(monopolySpil.getPris(field)));
                         updateBalances();
                     }
+
+                    //hvis spilleren ikke kan betale husleje
                     else {
                         monopolySpil.setBalance(playerTurn, 0);
-                        banktrupcyCount = 1;
+                        bankruptcyCount = 1;
                         monopolySpil.setBalance(playerTurn, 0);
                         updateBalances();
                         guiController.getInput(monopolySpil.getPlayerName(playerTurn) + " " + text[17]);
@@ -289,17 +308,23 @@ public class Main {
                 }
             }
         }
+
+        //hvis feltet ikke er ejet
         if (!monopolySpil.getOwned(field)) {
             guiController.getInput(monopolySpil.getFeltNavn(field) + " " + text[8] + monopolySpil.getPris(field) );
-            if (checkBanktrupcy(playerTurn,monopolySpil.getPris(field))) {
+
+            //hvis spilleren kan betale for feltet
+            if (checkBankruptcy(playerTurn,monopolySpil.getPris(field))) {
                 monopolySpil.addToPlayerBalance(playerTurn, -(monopolySpil.getPris(field)));
                 monopolySpil.setOwner(field, playerTurn);
                 guiController.setOwner(monopolySpil.getPlayerName(playerTurn), field);
                 updateBalances();
             }
+
+            //hvis spilleren ikke kan betale for feltet
             else {
                 monopolySpil.setBalance(playerTurn, 0);
-                banktrupcyCount = 1;
+                bankruptcyCount = 1;
                 monopolySpil.setBalance(playerTurn, 0);
                 updateBalances();
                 guiController.getInput(monopolySpil.getPlayerName(playerTurn) + " " + text[18]);
@@ -307,17 +332,23 @@ public class Main {
         }
     }
 
+    //ansvarlig for at starte spillet
     private static void setUpGame(){
+
+        //spørger hvor mange spillere der er og sætter det i spillet
         numberPlayers = guiController.getTotalPlayers(text[0]);
         monopolySpil.saetSpillere(numberPlayers);
         guiController.setPlayers(numberPlayers);
         guiController.getInput(text[1]);
 
+        //spørger om spillernavne og farver til spillere
         for (int i = 1; i <= numberPlayers; i++){
             monopolySpil.saetSpillernavn(guiController.getUserName(text[2] + " " + i), i);
             Color color = guiController.getPlayerColor(text[3] + " " + i, numberPlayers);
             guiController.createSpiller(i, monopolySpil.getPlayerName(i), 0, color);
         }
+
+        //sætter spillernes balance efter hvor mange spillere der er
         for (int i = 1; i <= numberPlayers; i++){
             switch (numberPlayers){
                 case 2:
@@ -332,6 +363,7 @@ public class Main {
 
     }
 
+    //henter tekst der bruges i main
     private static void getGameText(){
         String fileName = "src/main/ressources/gameTekst.txt";
         File file = new File(fileName);
@@ -353,10 +385,12 @@ public class Main {
         }
     }
 
-    private static boolean checkBanktrupcy(int playerTurn, int ammountDue) {
+    //ansvarlig for at se om en spiller kan betale et beløb
+    private static boolean checkBankruptcy(int playerTurn, int ammountDue) {
         return ammountDue < monopolySpil.getPlayerBalance(playerTurn);
     }
 
+    //opdaterer alle spilleres balance i guien
     private static void updateBalances(){
         for (int i = 1; i <= numberPlayers; i++){
             guiController.setBalance(i, monopolySpil.getPlayerBalance(i));
