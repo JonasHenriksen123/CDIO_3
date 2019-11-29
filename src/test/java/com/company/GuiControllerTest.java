@@ -39,5 +39,4 @@ class GuiControllerTest {
         Assert.assertEquals(guiController.getBalance(1), 25);
     }
 
-
 }
