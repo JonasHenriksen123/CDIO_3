@@ -352,7 +352,7 @@ public class GuiController {
 
     //viser en tekst til spilleren hvor der står hvem der har vundet spillet
     public void showWinner(String txt){
-        gui.showMessage(txt);
+        gui.displayChanceCard(txt);
     }
 
     //Bruges til junit test

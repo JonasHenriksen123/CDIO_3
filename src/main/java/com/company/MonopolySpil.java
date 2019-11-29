@@ -8,7 +8,7 @@ public class MonopolySpil {
     private Spiller[] players;
     private Spilplade spilplade;
     private Terning	terning;
-    private Chancekort[] chancekort = new Chancekort[6];
+    private Chancekort[] chancekort = new Chancekort[7];
 
     //constructor
     public MonopolySpil() {
@@ -158,7 +158,7 @@ public class MonopolySpil {
             System.out.println("error reading file '" + fileName + "'");
         }
 
-        for (int i = 0; i <= 5; i++){
+        for (int i = 0; i <= 6; i++){
             chancekort[i] = new Chancekort(text[i]);
         }
     }
